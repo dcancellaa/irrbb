@@ -1,0 +1,6 @@
+product_type,currency,nmd_category,core_share,core_avg_maturity,beta,reprice_months,source
+DDA,,RETAIL_TRANSACTIONAL,0.70,3.0,0.10,1,PLACEHOLDER - replace with deposit study
+DDA,,WHOLESALE,0.35,1.5,0.25,1,PLACEHOLDER - replace with deposit study
+MMDA,,,0.40,1.5,0.65,1,PLACEHOLDER - replace with deposit study
+MMDA,USD,WHOLESALE,0.25,1.0,0.85,1,PLACEHOLDER - replace with deposit study
+SAVINGS,,,0.60,2.5,0.35,1,PLACEHOLDER - replace with deposit study

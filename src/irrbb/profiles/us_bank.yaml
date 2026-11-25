@@ -1,0 +1,74 @@
+# US full-licence bank (subsidiary of a foreign group) — US supervisory view.
+#
+# US agencies are principles based (2010 Interagency Advisory on Interest Rate
+# Risk Management; OCC Comptroller's Handbook "Interest Rate Risk"; Fed SR 10-1;
+# FDIC / FFIEC guidance on sensitivity to market risk). They expect:
+#   * instantaneous parallel shocks of at least ±200bp (±100..±400bp here),
+#     for both earnings (NII) and economic value (EVE);
+#   * gradual (ramp) scenarios for earnings;
+#   * non-parallel scenarios (twists, short / long end) and basis risk;
+#   * board-approved limits measured against own capital and base earnings.
+# There is no supervisory outlier test in the US, so it is switched off.
+# Limit LEVELS are left empty until ALCO approves them: the exposure is still
+# measured and reported with status NOT_SET.
+reporting_currency: USD
+nii_horizon_months: 12
+lower_bound: ZERO
+
+# Non-parallel shapes (steepener, flattener, short up / down, plus BCBS parallel)
+standard_scenarios: true
+behavioural_scalars: true
+outlier_tests: false
+
+us_scenarios:
+  parallel_bp: [100, 200, 300, 400]
+  ramp_bp: [100, 200, 300, 400]
+  ramp_months: 12
+  behavioural_scalars: true
+
+# Basis risk: shock one curve against the others of the same currency.
+custom_scenarios:
+  - name: BASIS_TERM_SOFR_UP_25
+    kind: parallel
+    bp: 25
+    curves: [USD-TERM-SOFR-3M]
+    description: Term SOFR widens 25bp vs SOFR OIS
+
+# No onshore BRL business: BRL exposure is NDFs only (vs USD and EUR), so the
+# offshore NDF-implied curve is THE BRL discount curve. BRL is shocked like any
+# other currency (BCBS size 400/500/300 for the curve shapes).
+discount_map:
+  BRL: BRL-NDF-IMPLIED
+
+# NDFs cash-settle in USD or EUR; any other settlement currency is rejected.
+ndf_settlement_currencies: [USD, EUR]
+
+# Hook for a EUR-based BRL implied curve (EUR/BRL NDFs). Until the group tool
+# publishes one, EUR/BRL NDFs use BRL-NDF-IMPLIED (implied against USD).
+# ndf_discount_by_pair:
+#   EURBRL: BRL-NDF-IMPLIED-EUR
+
+# Positions sit mostly below 3Y: require the short end only. Cash flows beyond
+# a curve's last pillar are still flagged (CURVE_EXTRAPOLATION warning).
+market_data_checks:
+  required_tenors: [1M, 3M, 6M, 1Y, 2Y, 3Y]
+
+# tier1_capital: set per run (--tier1) from the latest regulatory capital.
+limits:
+  - { name: NII_RAMP_200_PCT_BASE, metric: NII, basis: PCT_BASE,
+      scenarios: [US_RAMP_UP_200_12M, US_RAMP_DOWN_200_12M] }
+  - { name: NII_SHOCK_200_PCT_BASE, metric: NII, basis: PCT_BASE,
+      scenarios: [US_PARALLEL_UP_200, US_PARALLEL_DOWN_200] }
+  - { name: NII_SHOCK_400_PCT_BASE, metric: NII, basis: PCT_BASE,
+      scenarios: [US_PARALLEL_UP_400, US_PARALLEL_DOWN_400] }
+  - { name: EVE_SHOCK_200_PCT_BASE, metric: EVE, basis: PCT_BASE,
+      scenarios: [US_PARALLEL_UP_200, US_PARALLEL_DOWN_200] }
+  - { name: EVE_SHOCK_400_PCT_BASE, metric: EVE, basis: PCT_BASE,
+      scenarios: [US_PARALLEL_UP_400, US_PARALLEL_DOWN_400] }
+  - { name: EVE_SHOCK_200_PCT_TIER1, metric: EVE, basis: PCT_CAPITAL,
+      scenarios: [US_PARALLEL_UP_200, US_PARALLEL_DOWN_200] }
+  - { name: EVE_SHOCK_400_PCT_TIER1, metric: EVE, basis: PCT_CAPITAL,
+      scenarios: [US_PARALLEL_UP_400, US_PARALLEL_DOWN_400] }
+  - { name: EVE_NON_PARALLEL_PCT_TIER1, metric: EVE, basis: PCT_CAPITAL,
+      families: [BCBS] }
+external_cashflow_mode: AUTO

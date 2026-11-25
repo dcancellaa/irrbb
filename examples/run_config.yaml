@@ -1,0 +1,35 @@
+# Example IRRBB run configuration. Usage:
+#   irrbb run --as-of 2026-11-24 --data-dir data --config examples/run_config.yaml
+reporting_currency: USD
+nii_horizon_months: 12
+lower_bound: ZERO           # NONE | ZERO | EBA
+gain_weight: 0.0            # 0 = BCBS 368, 0.5 = EBA GL/2022/14
+tier1_capital: 900000000
+eve_sot_threshold: 0.15
+nii_sot_threshold: 0.05
+behavioural_scalars: true
+
+shock_sizes:
+  COP: { parallel: 400, short: 500, long: 300 }
+
+custom_scenarios:
+  - name: PARALLEL_UP_100
+    kind: parallel
+    bp: 100
+  - name: PARALLEL_DOWN_100
+    kind: parallel
+    bp: -100
+  - name: ALCO_BEAR_STEEPENER_USD
+    kind: tenor
+    times: [0, 1, 5, 10, 30]
+    bp_points: [25, 50, 100, 150, 150]
+    currencies: [USD]
+  - name: DEPOSIT_REPRICING_STRESS
+    kind: parallel
+    bp: 200
+    nmd_beta_scalar: 1.5
+
+nmd_assumptions:
+  MMDA: { core_share: 0.45, core_avg_maturity: 1.75, beta: 0.6 }
+
+key_rate_pillars: [0.25, 0.5, 1, 2, 3, 5, 7, 10, 15, 20, 30]

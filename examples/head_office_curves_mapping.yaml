@@ -1,0 +1,19 @@
+# Maps a head-office curve-tool export onto the curve_quotes contract.
+# Adjust the left-hand side to the export's actual column names and codes.
+dataset: curve_quotes
+date_column: BUSINESS_DATE
+columns:
+  CURVE_ID: curve_name
+  CCY: currency
+  TENOR: tenor
+  INSTRUMENT: quote_type
+  MID_RATE: value
+  DAY_COUNT: day_count
+value_scale: 0.01            # export is in percent
+quote_type_map: {DEP: DEPOSIT, OIS: OIS_SWAP, ZC: ZERO_CC, DF: DISCOUNT_FACTOR}
+curve_name_map: {USD_SOFR_OIS: USD-SOFR, EUR_ESTR_OIS: EUR-ESTR, GBP_SONIA_OIS: GBP-SONIA,
+                 MXN_TIIE_OIS: MXN-TIIE, BRL_NDF_IMPLIED: BRL-NDF-IMPLIED}
+tenor_map: {12M: 1Y, 24M: 2Y}
+discount_curves: [USD-SOFR, EUR-ESTR, GBP-SONIA, MXN-TIIE, BRL-NDF-IMPLIED]
+# BRL-NDF-IMPLIED may arrive as ZERO_CC yields, or as FX_SPOT + FX_OUTRIGHT /
+# FX_POINTS rows with base_curve: USD-SOFR (add a BASE_CURVE column mapping).

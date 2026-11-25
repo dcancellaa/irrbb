@@ -1,0 +1,90 @@
+site_name: IRRBB Engine
+site_description: Interest Rate Risk in the Banking Book — EVE, NII, gap and sensitivities.
+repo_name: irrbb
+docs_dir: docs
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - search.highlight
+  palette:
+    - scheme: default
+      primary: indigo
+      toggle: { icon: material/brightness-7, name: Dark mode }
+    - scheme: slate
+      primary: indigo
+      toggle: { icon: material/brightness-4, name: Light mode }
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - tables
+  - toc: { permalink: true }
+  - pymdownx.details
+  - pymdownx.tabbed: { alternate_style: true }
+  - pymdownx.arithmatex: { generic: true }
+  - pymdownx.highlight
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            docstring_style: google
+            show_source: true
+            show_root_heading: true
+            show_signature_annotations: true
+            separate_signature: true
+            members_order: source
+            merge_init_into_class: true
+
+nav:
+  - Home: index.md
+  - Getting started: getting-started.md
+  - Guides:
+      - Regulatory set-up (US bank): guides/regulatory-setup.md
+      - Data contracts: guides/data-contracts.md
+      - Modelling products: guides/products.md
+      - Integrating source systems: guides/integration.md
+      - Market data: guides/market-data.md
+      - Reconciliation: guides/reconciliation.md
+      - Deposit assumptions: guides/deposit-assumptions.md
+      - Database (PostgreSQL): guides/database.md
+      - Configuration: guides/configuration.md
+      - REST API: guides/api.md
+      - Outputs: guides/outputs.md
+  - Methodology:
+      - Curves: methodology/curves.md
+      - Shock scenarios: methodology/scenarios.md
+      - EVE: methodology/eve.md
+      - NII: methodology/nii.md
+      - Behavioural models: methodology/behavioural.md
+      - Sign conventions: methodology/conventions.md
+  - Reference:
+      - Core: reference/core.md
+      - Curves: reference/curves.md
+      - Scenarios: reference/scenarios.md
+      - Instruments: reference/instruments.md
+      - Behavioural: reference/behavioral.md
+      - Engine: reference/engine.md
+      - Measures: reference/measures.md
+      - Data: reference/data.md
+      - Database: reference/db.md
+      - Configuration: reference/config.md
+  - Roadmap: roadmap.md

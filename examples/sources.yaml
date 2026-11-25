@@ -1,0 +1,8 @@
+# Routes each dataset to its source (irrbb run --sources examples/sources.yaml).
+# Types: files | database | bloomberg | mapped_file. Relative paths are resolved
+# against this file's directory.
+default:          {type: files, root: ../data}
+nmd_assumptions:  {type: mapped_file, path: nmd_assumptions.csv}
+# curve_quotes:   {type: bloomberg, config: bloomberg_tickers.yaml}
+# curve_quotes:   {type: mapped_file, path: /feeds/head_office/curves_{as_of}.csv,
+#                  mapping: head_office_curves_mapping.yaml}

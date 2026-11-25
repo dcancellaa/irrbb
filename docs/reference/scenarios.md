@@ -1,0 +1,3 @@
+# Scenarios
+
+::: irrbb.scenarios.shocks

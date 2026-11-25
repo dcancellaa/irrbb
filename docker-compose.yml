@@ -1,0 +1,19 @@
+# Local / CI PostgreSQL for the IRRBB engine (PostgreSQL 19, released 2026-11-19).
+#   docker compose up -d db
+#   export IRRBB_DATABASE_URL=postgresql+psycopg://irrbb:irrbb@localhost:5432/irrbb
+#   uv run irrbb db upgrade
+services:
+  db:
+    image: postgres:19
+    environment:
+      POSTGRES_USER: irrbb
+      POSTGRES_PASSWORD: irrbb          # local only: use a secret store elsewhere
+      POSTGRES_DB: irrbb
+    ports: ["5432:5432"]
+    volumes: ["irrbb-pg:/var/lib/postgresql"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U irrbb -d irrbb"]
+      interval: 5s
+      retries: 10
+volumes:
+  irrbb-pg:

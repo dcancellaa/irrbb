@@ -1,0 +1,32 @@
+# Bloomberg ticker map for BloombergSource. VERIFY every ticker on your terminal
+# (SECF / curve monitor ICVS) before production use; scale 0.01 converts percent
+# quotes into decimals. Add MXN / BRL / other curves from the head-office set.
+curves:
+  # USD SOFR OIS (discount curve)
+  - {ticker: "USOSFRA Curncy", curve_name: USD-SOFR, currency: USD, tenor: 1M, quote_type: DEPOSIT, day_count: ACT/360}
+  - {ticker: "USOSFRC Curncy", curve_name: USD-SOFR, currency: USD, tenor: 3M, quote_type: DEPOSIT, day_count: ACT/360}
+  - {ticker: "USOSFRF Curncy", curve_name: USD-SOFR, currency: USD, tenor: 6M, quote_type: DEPOSIT, day_count: ACT/360}
+  - {ticker: "USOSFR1 Curncy", curve_name: USD-SOFR, currency: USD, tenor: 1Y, day_count: ACT/360}
+  - {ticker: "USOSFR2 Curncy", curve_name: USD-SOFR, currency: USD, tenor: 2Y, day_count: ACT/360}
+  - {ticker: "USOSFR3 Curncy", curve_name: USD-SOFR, currency: USD, tenor: 3Y, day_count: ACT/360}
+  - {ticker: "USOSFR5 Curncy", curve_name: USD-SOFR, currency: USD, tenor: 5Y, day_count: ACT/360}
+  - {ticker: "USOSFR7 Curncy", curve_name: USD-SOFR, currency: USD, tenor: 7Y, day_count: ACT/360}
+  - {ticker: "USOSFR10 Curncy", curve_name: USD-SOFR, currency: USD, tenor: 10Y, day_count: ACT/360}
+  - {ticker: "USOSFR15 Curncy", curve_name: USD-SOFR, currency: USD, tenor: 15Y, day_count: ACT/360}
+  - {ticker: "USOSFR20 Curncy", curve_name: USD-SOFR, currency: USD, tenor: 20Y, day_count: ACT/360}
+  - {ticker: "USOSFR30 Curncy", curve_name: USD-SOFR, currency: USD, tenor: 30Y, day_count: ACT/360}
+  # EUR €STR OIS
+  - {ticker: "EESWE1 Curncy", curve_name: EUR-ESTR, currency: EUR, tenor: 1Y, day_count: ACT/360}
+  - {ticker: "EESWE2 Curncy", curve_name: EUR-ESTR, currency: EUR, tenor: 2Y, day_count: ACT/360}
+  - {ticker: "EESWE5 Curncy", curve_name: EUR-ESTR, currency: EUR, tenor: 5Y, day_count: ACT/360}
+  - {ticker: "EESWE10 Curncy", curve_name: EUR-ESTR, currency: EUR, tenor: 10Y, day_count: ACT/360}
+  # GBP SONIA OIS
+  - {ticker: "BPSWS1 Curncy", curve_name: GBP-SONIA, currency: GBP, tenor: 1Y, day_count: ACT/365F}
+  - {ticker: "BPSWS2 Curncy", curve_name: GBP-SONIA, currency: GBP, tenor: 2Y, day_count: ACT/365F}
+  - {ticker: "BPSWS5 Curncy", curve_name: GBP-SONIA, currency: GBP, tenor: 5Y, day_count: ACT/365F}
+  - {ticker: "BPSWS10 Curncy", curve_name: GBP-SONIA, currency: GBP, tenor: 10Y, day_count: ACT/365F}
+fx:
+  - {ticker: "EURUSD Curncy", currency: EUR, scale: 1.0}
+  - {ticker: "GBPUSD Curncy", currency: GBP, scale: 1.0}
+  - {ticker: "USDMXN Curncy", currency: MXN, scale: 1.0, invert: true}
+  - {ticker: "USDBRL Curncy", currency: BRL, scale: 1.0, invert: true}
